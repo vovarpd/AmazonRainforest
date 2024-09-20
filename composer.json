@@ -4,7 +4,7 @@
   "license": "MIT",
   "description": "Simplified access the Amazon Rainforest API",
   "keywords": ["amazon", "rainforest api", "amazon api"],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "authors": [
     {
       "name": "Christian Morgan, Caponica",
