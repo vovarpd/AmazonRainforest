@@ -58,7 +58,6 @@ class RainforestClient
     const REQUEST_TYPE_SEARCH           = 'search';
     const REQUEST_TYPE_STOCK_ESTIMATION = 'stock_estimation';
 
-    protected LoggerInterface $logger;
     private string $apiKey;
     private mixed $debugFilePath = null;
     /** @var bool $debugInput       Set true to read responses from a file, instead of calling the API */
@@ -70,7 +69,7 @@ class RainforestClient
      * @param array $config             Must include "api_key" with value. Other options are debug_file_path, debug_input, debug_output.
      * @param ?LoggerInterface $logger
      */
-    public function __construct(array $config, LoggerInterface $logger = null) {
+    public function __construct(array $config, protected ?LoggerInterface $logger = null) {
         $this->logger           = $logger;
 
         $this->apiKey           = $config['api_key'];
@@ -483,7 +482,7 @@ class RainforestClient
      *
      * @return void
      */
-    protected function logMessage(string $message, mixed $level, array $context = [])
+    protected function logMessage(string $message, mixed $level, array $context = []): void
     {
         if ($this->logger) {
             // Use the internal logger for logging.
@@ -496,7 +495,8 @@ class RainforestClient
     protected function getDebugFileName() {
         return $this->debugFilePath;
     }
-    protected function debugSaveResponseToFile(ResponseInterface $response) {
+    protected function debugSaveResponseToFile(ResponseInterface $response): void
+    {
         $fileHandle = @fopen($this->getDebugFileName(), 'w+');
         fwrite($fileHandle, $response->getBody());
         fclose($fileHandle);
